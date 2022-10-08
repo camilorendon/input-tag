@@ -8,9 +8,21 @@ export default{
     },
     methods:{
         handleKeyDown(e){
-            if(e.key === "Enter" && this.currentValue != ''){
-                this.tags.push(this.currentValue)
+            if (e.key === "Backspace" && this.currentValue === "") {
+                this.tags.pop();
             }
+        },
+        handleSubmit(){
+            if( this.currentValue != ''){
+                const exist = this.tags.some(item => item === this.currentValue);
+                if(!exist){
+                    this.tags.push(this.currentValue)
+                    this.currentValue ='';
+                }
+            }
+        },
+        deleteTag(tag){
+            this.tags = this.tags.filter(item => item != tag)
         },
     },
 };
@@ -19,9 +31,11 @@ export default{
 <template>
 <div class="inputTag">
     <div class="tags">
-        <div class="tag" v-for="(tag, index) in tags" :key="index">{{tag}}</div>
+        <div class="tag" v-for="(tag, index) in tags" :key="index">{{tag}} <button @click="deleteTag(tag)">X</button></div>
     </div>
-    <input type="text" v-model="currentValue" @keydown="handleKeyDown"/>
+    <form @submit.prevent="handleSubmit">
+        <input type="text" v-model="currentValue" @keydown="handleKeyDown"/>
+    </form>
 
 </div>
 
