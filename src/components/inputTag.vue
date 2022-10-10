@@ -1,5 +1,12 @@
 <script>
 export default{
+
+    data(){
+        return{
+            currentValue: "",
+            tags: [],
+        };
+    },
     methods:{
         handleKeyDown(e){
             if (e.key === "Backspace" && this.currentValue === "") {
@@ -8,7 +15,7 @@ export default{
         },
         handleSubmit(){
             if( this.currentValue != ''){
-                const exist = this.tags.some(item => item === this.currentValue);
+                const exist = this.tags.some((item) => item === this.currentValue);
                 if (!exist) {
                     this.tags.push(this.currentValue);
                     this.currentValue ="";
